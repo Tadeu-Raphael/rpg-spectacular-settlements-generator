@@ -50,8 +50,14 @@
     <br><br>
 
     <h2>Points of Interest</h2>
+        <h3>Default</h3>
+            <p id="defaultPoints" style="white-space: pre;"></p>
         <h3>Worship</h3>
             <p id="worship" style="white-space: pre;"></p>
+        <h3>Places of Gathering</h3>
+            <p id="placeGathering" style="white-space: pre;"></p>
+        <h3>Other Locations</h3>
+            <p id="otherLocations" style="white-space: pre;"></p>
 
 </body>
 </html>
@@ -66,7 +72,7 @@
     var hardLikeMod = 0;
     var amountHardship = 0;
     var crimeMod = 0;
-
+    var otherLocationsTypeAux = 0;
 
     //Basic Information
     ageValue();
@@ -90,6 +96,8 @@
 
     //Points of Interest
     worshipValue(sizeFinal);
+    placeGatheringValue(sizeFinal);
+    otherLocationsValue(sizeFinal);
 
     function isInRange(x, min, max) {
         return min <= x && x <= max;
@@ -214,6 +222,9 @@
                 hardshipType.textContent += "\r\n\r\n";
             }
         }
+        if(amountHardship == 0){
+            hardshipType.textContent += "None.";
+        }
     }
 
     function hardshipOutcomeValue(){
@@ -329,7 +340,7 @@
                 environment.textContent += "Tundra. The village is in a very cold environment.";
                 break;
             case 10:
-                environment.textContent += "Desert. The village is in a dry and arid environment, likely covered with vast sand dunes.   ";
+                environment.textContent += "Desert. The village is in a dry and arid environment, likely covered with vast sand dunes.";
                 break;
         }
     }
@@ -361,37 +372,48 @@
 
     function resourceValue(){
         let resource = document.getElementById("resource");
+        let defaultPoints = document.getElementById("defaultPoints");
         let roll = (Math.floor(Math.random() * 10) + 1);
         switch(roll){
             case 1:
                 resource.textContent += "Crops. The village is surrounded by fields or orchards that produce wheat, barley, grapes, vegetables, fruit, etc. These are harvested in their raw forms, and the excess is sold or traded.";
+                defaultPoints.textContent += "1. Farm(s) \r\n2. Mill(s) and/or storage locations (silos or barns)";
                 break;
             case 2:
                 resource.textContent += "Dairy. Pastures contain cows, goats, or sheep for milk, or chickens (or similar) for eggs. Additional animals may also be bred for sale. Due to milks tendency to spoil quickly, it might only be sold at nearby towns or markets. If the produce needs to travel longer distances, perhaps the village makes butter, cream, or cheese instead.";
+                defaultPoints.textContent += "1. Cellar\r\n2. Creamery\r\n3. Field/Barn/Coop";
                 break;
             case 3:
                 resource.textContent += "Herbs. Herbs grown in the village are used for alchemy, medicine or, simply, cooking, and are typically tended by an individual, due to their more specialized, and potentially dangerous, nature. The individual may have had some degree of medical, or arcane, training. Note: Unless the village is extremely small, it is unlikely that herbs are a villages sole focus.";
+                defaultPoints.textContent += "1. Herbalist’s Hut\r\n2. Gardens";
                 break;
             case 4:
                 resource.textContent += "Fishing. The villagers utilize the bounty of the nearest stream, river, lake, or ocean. The villages proximity to neighboring settlements dictates how the fish can be sold. If remote, the fish might be dried and salted; if nearby, they could be sold fresh.";
+                defaultPoints.textContent += "1. Fisherman’s Stand\r\n2. Wharf/Pier";
                 break;
             case 5:
                 resource.textContent += "Livestock (Labor). Animals are bred here to perform a particular job. These include plough and war horses, donkeys, cattle, and oxen. The breeding and raising of these animals can be a long process, so trade is likely seasonal, and the animals expensive. Location(s): stable or barn";
+                defaultPoints.textContent += "1. Stable or Barn";
                 break;
             case 6:
                 resource.textContent += "Livestock (Meat and Hides). Animals are raised to be slaughtered for meat, including cattle, pigs, and sheep. Some may be kept to feed the village, but excess animals (live or butchered) would be sold or traded. Location(s): barn or pens, small butchers shop";
+                defaultPoints.textContent += "1. Barn or Pens\r\n2. Small Butcher’s Shop";
                 break;
             case 7:
                 resource.textContent += "Livestock (Shearing): Llamas, sheep, goats, and/or yaks are shorn in the village, the wool bundled and taken to market. The village may also produce its own woolen goods for sale.";
+                defaultPoints.textContent += "1. Shearing Shed\r\n2. Storage\r\n3. Fields/Barn\r\n4. Small Stall/Shop";
                 break;
             case 8:
                 resource.textContent += "Logging and Lumber. Trees are planted and harvested, sustainably. Harvested trees are hand- trimmed of branches, and logs are used, traded, and sold. Villagers may also process wood to craft wooden goods.";
+                defaultPoints.textContent += "1. Logging Camp\r\n2. Carpenters Workshop";
                 break;
             case 9:
                 resource.textContent += "Mining. Raw metal ores are excavated from the ground, cleaned and sorted, and then used, traded, or sold. It is possible the mine is owned by a noble or kingdom, who sends transport to pick up excavated materials. Ores may be processed in the village and turned into metal goods.";
+                defaultPoints.textContent += "1. Foreman’s Station\r\n2. Mine\r\n3. Smithy";
                 break;
             case 10:
                 resource.textContent += "Quarrying and Masonry. Stone is removed from the landscape in either raw, unrefined pieces, or cut into blocks for various purposes. It is possible the quarry is owned by a noble or kingdom, who sends transport to pick up excavated materials. A local mason may build using the excavated stone.";
+                defaultPoints.textContent += "1. Mason or Foreman’s Station";
                 break;
         }
     }
@@ -625,7 +647,6 @@
                 worshipAmount = ((Math.floor(Math.random() * 2) + 1) + 1)
                 break;
         }
-
         for(cont = 0; cont < worshipAmount; cont++){
             let worshipSize = worshipSizeValue();
             let worshipFervency = worshipFervencyValue();
@@ -634,6 +655,9 @@
             if(cont != (worshipAmount - 1)){
                 worship.textContent += "\r\n";
             }
+        }
+        if(worshipAmount == 0){
+            worship.textContent += "None.";
         }
     }
 
@@ -696,6 +720,204 @@
                 break;
             case isInRange(roll, 6, 10):
                 return worshipAlignment = "Good";
+                break;
+        }
+    }
+
+    function placeGatheringValue(sizeFinal){
+        let placeGathering = document.getElementById("placeGathering");
+        switch(sizeFinal){
+            case 1:
+                placeGatheringAmount = ((Math.floor(Math.random() * 2) + 1) - 1);
+                break;
+            case 2:
+                placeGatheringAmount = 1;
+                break;
+            case 3:
+                placeGatheringAmount = (Math.floor(Math.random() * 2) + 1);
+                break;
+            case 4:
+                placeGatheringAmount = (Math.floor(Math.random() * 2) + 1);
+                break;
+            case 5:
+                placeGatheringAmount = ((Math.floor(Math.random() * 2) + 1) + 1);
+                break;
+        }
+        for(cont = 0; cont < placeGatheringAmount; cont++){
+            let placeGatheringType = placeGatheringTypeValue();
+            placeGathering.textContent += cont+1 + ". " + placeGatheringType;
+            if(cont != (placeGatheringAmount - 1)){
+                placeGathering.textContent += "\r\n";
+            }
+        }
+        if(placeGatheringAmount == 0){
+            placeGathering.textContent += "None.";
+        }
+    }
+
+    function placeGatheringTypeValue(){
+        let roll = (Math.floor(Math.random() * 4) + 1);
+        switch(roll){
+            case 1:
+                return "Amphitheater. Outdoor space with a stage and tiered seating.";
+                break;
+            case 2:
+                return "Dance Hall. Location for dances and festive events.";
+                break;
+            case 3:
+                return "Gathering Hall. General building used for community-organised activities.";
+                break;
+            case 4:
+                return "Outdoor Recreational Area. A tended space where locals might eat, take leisure time, or duel to the death...";
+                break;
+        }
+    }
+
+    function otherLocationsValue(sizeFinal){
+        let otherLocations = document.getElementById("otherLocations");
+        switch(sizeFinal){
+            case 1:
+                otherLocationsAmount = ((Math.floor(Math.random() * 2) + 1) - 1);
+                break;
+            case 2:
+                otherLocationsAmount = (Math.floor(Math.random() * 2) + 1);
+                break;
+            case 3:
+                otherLocationsAmount = ((Math.floor(Math.random() * 2) + 1) + 1);
+                break;
+            case 4:
+                otherLocationsAmount = (Math.floor(Math.random() * 2) + 1) + (Math.floor(Math.random() * 2) + 1);
+                break;
+            case 5:
+                otherLocationsAmount = ((Math.floor(Math.random() * 2) + 1) + (Math.floor(Math.random() * 2) + 1) + 1);
+                break;
+        }
+        for(cont = 0; cont < otherLocationsAmount; cont++){
+            let otherLocationsType = otherLocationsTypeValue(otherLocationsTypeAux);
+            otherLocations.textContent += cont+1 + ". " + otherLocationsType;
+            if(cont != (otherLocationsAmount - 1)){
+                otherLocations.textContent += "\r\n";
+            }
+        }
+        if(otherLocationsAmount == 0){
+            otherLocations.textContent += "None.";
+        }
+    }
+
+    function otherLocationsTypeValue(otherLocationsTypeAux){
+        let roll = ((Math.floor(Math.random() * 100) + 1) + otherLocationsTypeAux);
+        if(roll == 0){
+            roll++;
+        }
+        switch(true){
+            case isInRange(roll, 1, 4):
+                return "Baker (B). Bakes and sells fresh bread and, possibly, pastries.";
+                break;
+            case isInRange(roll, 5, 7):
+                return "Butcher (B). Processes and sells fresh and/or dried meat.";
+                break;
+            case isInRange(roll, 8, 11):
+                return "Cooper (B). Crafts wooden vessels held together with metal hoops, including barrels, buckets, etc.";
+                break;
+            case isInRange(roll, 12, 15):
+                return "Carpenter (B). Builds with or carves wood, as well as carrying out repairs.";
+                break;
+            case isInRange(roll, 16, 19):
+                return "General Store (B). Sells basic supplies, groceries, and various odds and ends.";
+                break;
+            case isInRange(roll, 20, 23):
+                return "Herbalist (B). Sells common herbs and natural, non- magical remedies.";
+                break;
+            case isInRange(roll, 24, 27):
+                return "Smithy (B). Sells and crafts metal tools and equipment, including very basic weapons and armor.";
+                break;
+            case isInRange(roll, 28, 31):
+                return "Tailor (B). Makes and sells of clothing, including hats and cloaks. Also sells general items made from cloth, such as blankets, and carries out repairs and alterations of cloth goods.";
+                break;
+            case isInRange(roll, 32, 35):
+                return "Tanner/Taxidermist (B). Processes animal hides for practical or ornamental purposes.";
+                break;
+            case isInRange(roll, 36, 39):
+                return "Thatcher (B). Builds roofs using layers of dried straw, reeds, rushes, etc.";
+                break;
+            case isInRange(roll, 40, 43):
+                return "Wainwright (B). Builds carts and wagons.";
+                break;
+            case isInRange(roll, 44, 47):
+                return "Weaver (B). Weaves raw fabric and baskets.";
+                break;
+            case isInRange(roll, 48, 50):
+                return "Alchemist (S). Brews and sells potions, as well as mundane herbs and alchemical ingredients.";
+                break;
+            case isInRange(roll, 51, 52):
+                return "Artist (S). Encompasses painter, sculptor or other visual art as appropriate.";
+                break;
+            case isInRange(roll, 53, 55):
+                return "Cobbler (S). Makes and mends boots and shoes.";
+                break;
+            case isInRange(roll, 56, 58):
+                return "Mill (S). Facilities for milling grain.";
+                break;
+            case isInRange(roll, 59, 61):
+                return "Shipwright (S). Builds and launches boats and/ or ships. [Reroll if settlement is not bordering a significant source of water]";
+                break;
+            case isInRange(roll, 62, 62):
+                return "Rare Botanicals (E). Cultivates and sells herbs rare to the region";
+                break;
+            case isInRange(roll, 63, 63):
+                return "Luxury Furnishings (E). Procures and sells all manner of home items for fine living, including furniture, art, and other high-quality goods.";
+                break;
+            case isInRange(roll, 64, 64):
+                return "Rare Libations & Fare (E). Sells (and, perhaps, makes or brews) drinks and/or food of surpassing quality or rarity to the region.";
+                break;
+            case isInRange(roll, 65, 65):
+                return "Rare Trade Goods (E). Procures and sells items and materials, such as ores or textiles, that are rare to the region.";
+                break;
+            case isInRange(roll, 66, 66):
+                return "Magic Shop - Armor (E). Sells magical items with a focus on armor and protective equipment.";
+                break;
+            case isInRange(roll, 67, 67):
+                return "Magic Shop - Books (E). Sells magical items with a focus on literature, arcane tomes and lore. They may also carry books and documents (such as maps and records) of a rare and significant nature, though non-magical.";
+                break;
+            case isInRange(roll, 68, 68):
+                return "Magic Shop - Clothing (E). Sells magical items with a focus on clothing of all types which bear magical properties.";
+                break;
+            case isInRange(roll, 69, 69):
+                return "Magic Shop - Jewelry (E). Sells magical items with a focus on enchanted, or otherwise magically imbued, jewelry.";
+                break;
+            case isInRange(roll, 70, 70):
+                return "Magic Shop - Weapons (E). Sells magical items with a focus on weapons with mystic properties and, perhaps, shields.";
+                break;
+            case isInRange(roll, 71, 71):
+                return "Magic Shop - Miscellaneous & Curiosities (E). Procures and sells magical items with a focus on strange and rare artifacts of a wondrous or intriguing nature.";
+                break;
+            case isInRange(roll, 72, 73):
+                return "Barber. Provides grooming services, such as haircuts or shaves.";
+                break;
+            case isInRange(roll, 74, 75):
+                return "Bathhouse. Provides spaces for bathing.";
+                break;
+            case isInRange(roll, 76, 77):
+                return "Doctor/Apothecary. Provides medical care.";
+                break;
+            case isInRange(roll, 78, 79):
+                return "House of Leisure. Provides entertainment and/or relaxation (GM may decide what kind).";
+                break;
+            case isInRange(roll, 80, 84):
+                return "Inn. Provides accommodation, as well as a place to have a bath and a decent meal.";
+                break;
+            case isInRange(roll, 85, 89):
+                return "Soothsayer. Provides magical prediction and prophecy - sayers of sooth!";
+                break;
+            case isInRange(roll, 90, 94):
+                return "Stable. Provides boarding accommodation for mounts, as well as selling carts, animals, and their tack.";
+                break;
+            case isInRange(roll, 95, 99):
+                return "Tavern. Provides food and drink.";
+                break;
+            case isInRange(roll, 100, 100):
+                let aux = otherLocationsTypeValue(-1);
+                return "Burned down or abandoned business. This used to be a place of business, but isnt anymore. Roll once more on this table to see what it was." + " | " + aux;
                 break;
         }
     }
