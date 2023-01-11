@@ -59,6 +59,26 @@
         <h3>Other Locations</h3>
             <p id="otherLocations" style="white-space: pre;"></p>
 
+    <br><br>
+
+    <h2>Extra Intrigue</h2>
+        <h3>Events</h3>
+            <p id="villageEvents" style="white-space: pre;"></p>
+        <h3>Political Rumors</h3>
+            <p id="villagePoliticalRumors" style="white-space: pre;"></p>
+        <h3>Random Superstition</h3>
+            <p id="villageRandomSuperstition" style="white-space: pre;"></p>
+        <h3>Going On</h3>
+            <p id="villageGoingOn" style="white-space: pre;"></p>
+        <h3>Opportunities</h3>
+            <p id="villageOpportunities" style="white-space: pre;"></p>
+        <h3>Harsh Weather</h3>
+            <p id="villageHarshWeather" style="white-space: pre;"></p>
+        <h3>Danger Level</h3>
+            <p id="villageDangerLevel" style="white-space: pre;"></p>
+        <h3>Danger Type</h3>
+            <p id="villageDangerType" style="white-space: pre;"></p>
+
 </body>
 </html>
 
@@ -73,6 +93,7 @@
     var amountHardship = 0;
     var crimeMod = 0;
     var otherLocationsTypeAux = 0;
+    var flagVillageDangerLevel = 0;
 
     //Basic Information
     ageValue();
@@ -98,6 +119,17 @@
     worshipValue(sizeFinal);
     placeGatheringValue(sizeFinal);
     otherLocationsValue(sizeFinal);
+    
+    //Extra Intrigue
+    villageEventsValue();
+    villagePoliticalRumorsValue();
+    villageRandomSuperstitionValue();
+    villageGoingOnValue();
+    villageOpportunitiesValue();
+    villageHarshWeatherValue();
+    villageDangerLevelValue();
+    villageDangerTypeValue();
+
 
     function isInRange(x, min, max) {
         return min <= x && x <= max;
@@ -922,5 +954,273 @@
         }
     }
 
-</script>
+    function villageEventsValue(){
+        let villageEvents = document.getElementById("villageEvents");
+        let roll = (Math.floor(Math.random() * 10) + 1);
+        switch(roll){
+            case 1:
+                villageEvents.textContent += "Birth or Birthday. Blessings are sought for individuals on the day of their birth.";
+                break;
+            case 2:
+                villageEvents.textContent += "Party. These are fun events that bring the community together for fellowship and camaraderie, and could be happening for a number of reasons.";
+                break;
+            case 3:
+                villageEvents.textContent += "Funeral. A gathering to remember those from the community who passed away, either in mourning or in celebration of their life, with a party reflecting the things that meant most to the deceased.";
+                break;
+            case 4:
+                villageEvents.textContent += "Harvest and Productivity. Villagers seek blessings for upcoming work, such as a harvest, or thanks are given for bountiful yields.";
+                break;
+            case 5:
+                villageEvents.textContent += "Love. Festivities to encourage pairing, celebrating couples and family.";
+                break;
+            case 6:
+                villageEvents.textContent += "Political. A celebration honoring events of national significance, such as remembering a great victory, or gaining independence.";
+                break;
+            case 7:
+                villageEvents.textContent += "Religious. Events relating to and honoring a venerated deity are often regular and steeped in tradition.";
+                break;
+            case 8:
+                villageEvents.textContent += "Wedding. Celebrating the formal joining of two families.";
+                break;
+            case 9:
+                villageEvents.textContent += "Local. Celebration revolving around a major local event or the deeds of a local hero.";
+                break;
+            case 10:
+                villageEvents.textContent += "Travel & Welcome. Festivities welcome someone new to the community, or someone well on a journey.";
+                break;
+        }
+    }
 
+    function villagePoliticalRumorsValue(){
+        let villagePoliticalRumors = document.getElementById("villagePoliticalRumors");
+        let roll = (Math.floor(Math.random() * 6) + 1);
+        switch(roll){
+            case 1:
+                villagePoliticalRumors.textContent += "Mighty Misfortune. Misfortune has fallen upon a prominent figure residing near to, but outside the bounds of, the settlement (stripped of title, robbed, murdered, lost at cards, etc).";
+                break;
+            case 2:
+                villagePoliticalRumors.textContent += "Fealty. A new power is claiming rights of fealty over the village, at the culmination of a long conflict.";
+                break;
+            case 3:
+                villagePoliticalRumors.textContent += "Drums of War. Neighboring cities are preparing to go to war with one another.";
+                break;
+            case 4:
+                villagePoliticalRumors.textContent += "Noble Wedding. A local noble has just married the son or daughter of a well-loved (or greatly-loathed) family.";
+                break;
+            case 5:
+                villagePoliticalRumors.textContent += "More Taxes. An increase in taxes is about to implemented, to pay for an expensive and ambitious project.";
+                break;
+            case 6:
+                villagePoliticalRumors.textContent += "Missing Taxman. Taxes have not been collected in quite some time, and no one has seen the collector for weeks.";
+                break;
+        }
+    }
+
+    function villageRandomSuperstitionValue(){
+        let villageRandomSuperstition = document.getElementById("villageRandomSuperstition");
+        let roll = (Math.floor(Math.random() * 20) + 1);
+        switch(roll){
+            case 1:
+                villageRandomSuperstition.textContent += "Burying a dead cat under the doorstep is essential for a buildings prosperity.";
+                break;
+            case 2:
+                villageRandomSuperstition.textContent += "Half a chicken will cure any number of ailments (from plague, to pimples) when tied to the afflicted area.";
+                break;
+            case 3:
+                villageRandomSuperstition.textContent += "Placing mirrors, or large reflective objects, opposite one another in a room can open an invisible doorway for devils.";
+                break;
+            case 4:
+                villageRandomSuperstition.textContent += "Hanging mistletoe above the lintel is a sacred oath that the host will harm none who enter.";
+                break;
+            case 5:
+                villageRandomSuperstition.textContent += "Never stick a knife point-down into wood, or a cutting block, as it invites acts of violence among those nearby.";
+                break;
+            case 6:
+                villageRandomSuperstition.textContent += "Evil spirits can lurk within the leaves of cabbages and sprouts; you must carve a holy sign into the bottom before cooking them.";
+                break;
+            case 7:
+                villageRandomSuperstition.textContent += "After visiting a grave or cemetery, one must take a winding path home, making stops along the way, in order to lose any tag-along spirits.";
+                break;
+            case 8:
+                villageRandomSuperstition.textContent += "Giving a knife as a gift will sever a friendship, so they must always be symbolically paid for.";
+                break;
+            case 9:
+                villageRandomSuperstition.textContent += "Never use dull scissors as, if you do, you risk accidentally cutting the thread tethering your soul to your body.";
+                break;
+            case 10:
+                villageRandomSuperstition.textContent += "Knowing your full name allows those who wish you ill to put a curse on you, so keep your middle names secret.";
+                break;
+            case 11:
+                villageRandomSuperstition.textContent += "A carrion bird landing in front of you means you, or someone close to you, will die soon.";
+                break;
+            case 12:
+                villageRandomSuperstition.textContent += "A single magpie is bad luck, but saluting the lone magpie (Good morning Mr. Magpie, hows your wife?) will turn bad luck into good.";
+                break;
+            case 13:
+                villageRandomSuperstition.textContent += "In games, never grab the dice. The owner of the dice must give them to the first person who must roll, who must pass them on and so on. Doing otherwise will curse the dice for a fortnight.";
+                break;
+            case 14:
+                villageRandomSuperstition.textContent += "A pregnant woman must not go out in the evenings, lest the overwhelming darkness taint the child. If she must go out, she must carry a second lamp directly in front of her stomach, to protect the baby.";
+                break;
+            case 15:
+                villageRandomSuperstition.textContent += "When making a wish at a well, the value of coin you throw in should be commensurate with that of your wish.";
+                break;
+            case 16:
+                villageRandomSuperstition.textContent += "When speaking with adult men or women, it is bad luck to not address them as sir or madam, at least once, during the exchange.";
+                break;
+            case 17:
+                villageRandomSuperstition.textContent += "When mining or cutting stone, the chips from the first strike of the day must be pocketed by the one who struck, lest earth spirits feel taken for granted.";
+                break;
+            case 18:
+                villageRandomSuperstition.textContent += "Proclaiming new love at dawn or dusk is bad luck.";
+                break;
+            case 19:
+                villageRandomSuperstition.textContent += "Kissing the door frame of your house upon entry or exit asks the gods protection upon it.";
+                break;
+            case 20:
+                villageRandomSuperstition.textContent += "Never leave an empty spirits glass or cup right- side-up, lest an actual spirit attempt to fill the void, inhabiting the body of the next drinker.";
+                break;
+        }
+    }
+
+    function villageGoingOnValue(){
+        let villageGoingOn = document.getElementById("villageGoingOn");
+        let roll = (Math.floor(Math.random() * 6) + 1);
+        switch(roll){
+            case 1:
+                villageGoingOn.textContent += "Workers Compensation. A worker has been injured on the job, and folks are rushing to help them.";
+                break;
+            case 2:
+                villageGoingOn.textContent += "Road Merchant. A travelling merchant just arrived in town, and has all kinds of unique things to show and sell.";
+                break;
+            case 3:
+                villageGoingOn.textContent += "Children Missing. Some of the younger villagers have gone missing. How long have they been gone? What were they last seen doing?";
+                break;
+            case 4:
+                villageGoingOn.textContent += "Fallen Rider. A severely injured man in armor has ridden into the village, late at night, and fallen, unconscious, from his horse. He is wearing a tabard displaying an unfamiliar coat of arms.";
+                break;
+            case 5:
+                villageGoingOn.textContent += "They are Mine. Two villagers are competing for the hand of a local heartthrob.";
+                break;
+            case 6:
+                villageGoingOn.textContent += "Echoes in the Deep. A villager swears they can hear sounds like voices coming from underground.";
+                break;
+        }
+    }
+
+    function villageOpportunitiesValue(){
+        let villageOpportunities = document.getElementById("villageOpportunities");
+        let roll = (Math.floor(Math.random() * 6) + 1);
+        switch(roll){
+            case 1:
+                villageOpportunities.textContent += "Thief. Someone has been absconding with large amounts of the villages major crop, or resource.";
+                break;
+            case 2:
+                villageOpportunities.textContent += "Wildlife. Local wildlife has been harassing the villagers, or animals.";
+                break;
+            case 3:
+                villageOpportunities.textContent += "Monster(s). Something worse than simple wildlife is terrorizing the village.";
+                break;
+            case 4:
+                villageOpportunities.textContent += "Haunting. A spirit haunts some place within the village. Something was done to this person while they were alive that has tied the spirit to this place.";
+                break;
+            case 5:
+                villageOpportunities.textContent += "Party Time. A festival is coming up soon, and a shipment carrying something important for the event has not arrived.";
+                break;
+            case 6:
+                villageOpportunities.textContent += "Shady Doings. Strange symbols are discovered written on the walls of certain homes, or other buildings. Bits of bones, or piles of stones, placed just-so have been found. Something, or someone, is trying to send a message, or accomplish a less-than- savory task. What is it and why is it happening?";
+                break;
+        }
+    }
+
+    function villageHarshWeatherValue(){
+        let villageHarshWeather = document.getElementById("villageHarshWeather");
+        let roll = (Math.floor(Math.random() * 6) + 1);
+        switch(roll){
+            case 1:
+                villageHarshWeather.textContent += "Ideal. Recent conditions have been as good as possible. Work has been able to progress better than usual, and any grown resource may be having a richer yield than normal.";
+                break;
+            case 2:
+                villageHarshWeather.textContent += "Heavy Precipitation. Rain or snow have been significantly heavier than usual. There has either been sufficient flooding, or snow has been deep enough, to cause damage, perhaps even trapping folk inside their homes.";
+                break;
+            case 3:
+                villageHarshWeather.textContent += "Drought. It has been warm, maybe even pleasantly so, but it also has not rained in some time. Things are getting dry and brittle. Unless water storage solutions are in place, and water distribution (such as irrigation) is available, this doesnt bode well.";
+                break;
+            case 4:
+                villageHarshWeather.textContent += "Thunderstorms or Blizzards (non-arid region). The precipitation hasnt been the problem so much as the severity of the storms. It is impossible to work, or travel, in these conditions, so village residents are holed up inside, waiting out the storms, which have been occurring much more frequently.";
+                break;
+            case 5:
+                villageHarshWeather.textContent += "Wildfires. There have been fires, either nearby or some ways off. Either way, theyre too close for comfort. Ash can be seen on the ground, smoke can be smelled in the air, and forests nearby are in danger, if not ablaze already.";
+                break;
+            case 6:
+                villageHarshWeather.textContent += "Hail. Storms dropping chunks of ice at great speeds have been devastating the village, possibly damaging crops, structures, or even people and animals caught outdoors.";
+                break;
+            case 7:
+                villageHarshWeather.textContent += "Dust Storms (arid region). Dust storms have been passing through in a choking haze, making it difficult to travel, or do extended work outside. Air quality is awful, and some folk are getting sick.";
+                break;
+            case 8:
+                villageHarshWeather.textContent += "Hurricane (coastal region). A hurricane is approaching, or has arrived. Forceful wind, pounding rain, flooding, and hail have all been seen. Some folks may be fleeing.";
+                break;
+            case 9:
+                villageHarshWeather.textContent += "Tornado. A whirling cyclone is approaching, or has careened through or near, the village, uprooting crops, destroying buildings, or worse.";
+                break;
+            case 10:
+                villageHarshWeather.textContent += "Earthquake. Shifting earth beneath the village is causing, or has caused, structural collapse and, possibly, even sinkholes and cave-ins.";
+                break;
+        }
+    }
+
+    function villageDangerLevelValue(){
+        let villageDangerLevel = document.getElementById("villageDangerLevel");
+        let roll = (Math.floor(Math.random() * 20) + 1);
+        switch(true){
+            case isInRange(roll, 1, 2):
+                villageDangerLevel.textContent += "No Danger or Hazards. The village is a perfectly safe place to be (skip danger type table).";
+                flagVillageDangerLevel = 1;
+                break;
+            case isInRange(roll, 3, 6):
+                villageDangerLevel.textContent += "Low. Danger or hazards are a rarity.";
+                break;
+            case isInRange(roll, 7, 14):
+                villageDangerLevel.textContent += "Medium. Danger or hazards are not unheard of, but not everyone has experienced them.";
+                break;
+            case isInRange(roll, 15, 18):
+                villageDangerLevel.textContent += "High. Danger or hazards are common.";
+                break;
+            case isInRange(roll, 19, 20):
+                villageDangerLevel.textContent += "Extreme. Danger or hazards abound. It is never safe to go anywhere alone.";
+                break;
+        }
+    }
+
+    function villageDangerTypeValue(){
+        let villageDangerType = document.getElementById("villageDangerType");
+        let roll = (Math.floor(Math.random() * 6) + 1);
+        if(flagVillageDangerLevel != 1){
+            switch(roll){
+                case 1:
+                    villageDangerType.textContent += "Wildlife Attack. Wildlife lives in close proximity to the village, which may be open, or have little in the way of defenses. Wildlife may be free to roam the village, especially in low-traffic hours.";
+                    break;
+                case 2:
+                    villageDangerType.textContent += "Misunderstanding. For new arrivals in the village, especially those not from the region, communication can be hard. Miscommunication can lead to dangerous situations.";
+                    break;
+                case 3:
+                    villageDangerType.textContent += "Workplace Accidents. Depending on the kind of work being done, there may be some omnipresent danger, from mishaps with animals, to issues with equipment, especially if it is in poor condition.";
+                    break;
+                case 4:
+                    villageDangerType.textContent += "Disease. Villages can lack rigorous standards of cleanliness or, due to their rural placement, can sometimes be prone to issues with disease-carrying vermin.";
+                    break;
+                case 5:
+                    villageDangerType.textContent += "Unwanted Attention. Being a tight-knit community has the benefit of everyone being very familiar with everyone else. This makes visitors stick out like a sore thumb. This could draw attention from the villagers, or anyone who might be watching.";
+                    break;
+                case 6:
+                    villageDangerType.textContent += "Monster Prey. Large monsters, who might view a town or city as too threatening a target, may view a village as a much easier source of food.";
+                    break;
+            }
+        } else {
+            villageDangerType.textContent += "None.";
+        }
+        
+    }
+
+</script>
