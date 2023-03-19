@@ -2,6 +2,7 @@ var visitorTrafficMod = 0;
 var populationWealthMod = 0;
 var sizeMod = 0;
 var crimeMod = 0;
+var qualityMod = 0;
 var size = 0;
 
 
@@ -17,17 +18,17 @@ environmentValue();
 //Community
 residentPopulationValue();
 demographicsValue();
-dispositionValue();/*
-lawEnforcement();
-leadership();
-populationWealth();
+dispositionValue();
+lawEnforcementValue();
+leadershipValue();
+populationWealthValue();
 crimeValue();
 
 //Points of Interest
 shopsValue();
 servicesValue();
 placesWorshipValue();
-*/
+
 //Extra Intrigue
 recentHistoryValue();
 politicsValue();
@@ -316,10 +317,52 @@ function demographicsValue(){
 
 }
 
-disposition();
-lawEnforcement();
-leadership();
-populationWealth();
+function dispositionValue(){
+
+}
+
+function lawEnforcementValue(){
+
+}
+
+function leadershipValue(){
+
+}
+
+function populationWealthValue(){
+    let populationWealth = document.getElementById("populationWealth");
+    let roll = ((Math.floor(Math.random() * 20) + 1) + populationWealthMod);
+    switch(true){
+        case isInRange(roll, -5, 2):
+            populationWealth.innerHTML += "<b>Destitute.</b> Most of the population consistently lacks the barest essentials of what they need to survive.";
+            crimeMod += (-4);
+            qualityMod += (-2);
+            break;
+        case isInRange(roll, 3, 6):
+            populationWealth.innerHTML += "<b>Impoverished.</b> Around half of the population struggles to carve out even a meager existence.";
+            crimeMod += (-2);
+            qualityMod += (-1);
+            break;
+        case isInRange(roll, 7, 14):
+            populationWealth.innerHTML += "<b>Average.</b> Most of the population have enough to live a modest life.";
+            break;
+        case isInRange(roll, 15, 17):
+            populationWealth.innerHTML += "<b>Prosperous.</b> Most of the population has enough to live a good life and, of them, a fair amount can even live comfortably.";
+            crimeMod += (-1);
+            break;
+        case isInRange(roll, 18, 19):
+            populationWealth.innerHTML += "<b>Wealthy.</b> Nearly everyone has what they need to live comfortably, many are able to live well, and some are very prosperous.";
+            crimeMod += (-2);
+            qualityMod += (2);
+            break;
+        case isInRange(roll, 20, 26):
+            populationWealth.innerHTML += "<b>Affluent.</b> Nearly everyone is able to live comfortably, with a significant portion living in luxury.";
+            crimeMod += (-4);
+            qualityMod += (3);
+            break;
+    }
+}
+
 crimeValue();
 shopsValue();
 servicesValue();
@@ -351,7 +394,6 @@ function recentHistoryValue(){
 
 }
 
-
 function politicsValue(){
     let politics = document.getElementById("politics");
     let roll = (Math.floor(Math.random() * 6) + 1);
@@ -360,45 +402,47 @@ function politicsValue(){
             politics.innerHTML += "<b>On the Brink of War.</b> Tension is in the air, and rumors of impending conflict can be heard in hushed tones within the trading post.";
             break;
         case 2:
-            politics.innerHTML += "<b>Lawless Region.</b> With the trading post outside the regularly frequented borders of any established kingdom, the generally accepted standards of justice don't seem to apply here."
+            politics.innerHTML += "<b>Lawless Region.</b> With the trading post outside the regularly frequented borders of any established kingdom, the generally accepted standards of justice don't seem to apply here.";
             break;
         case 3:
-            politics.innerHTML += "<b>Embattled.</b> Opposing enemy forces surround the trading post on all sides, and it finds itself located in the midst of (though not necessarily participating in) an ongoing conflict."
+            politics.innerHTML += "<b>Embattled.</b> Opposing enemy forces surround the trading post on all sides, and it finds itself located in the midst of (though not necessarily participating in) an ongoing conflict.";
             break;
         case 4:
-            politics.innerHTML += "<b>Revolution.</b> A nearby kingdom is in the throes of an uprising. Members of either side may be present in the trading post."
+            politics.innerHTML += "<b>Revolution.</b> A nearby kingdom is in the throes of an uprising. Members of either side may be present in the trading post.";
             break;
         case 5:
-            politics.innerHTML += "<b>Peace.</b> All is quiet, almost suspiciously so...."
+            politics.innerHTML += "<b>Peace.</b> All is quiet, almost suspiciously so....";
             break;
         case 6: 
-        politics.innerHTML += "<b>New Governance.</b> A new and unknown power has moved in to control the surrounding area. Locals may be in favor of, against, or neutral about it. Depending on the kind of governance, speaking out against the leadership may not be permitted."
+        politics.innerHTML += "<b>New Governance.</b> A new and unknown power has moved in to control the surrounding area. Locals may be in favor of, against, or neutral about it. Depending on the kind of governance, speaking out against the leadership may not be permitted.";
     }   
 }   
+
 function eventsValue(){
     let events = document.getElementById("events");
     let roll = (Math.floor(Math.random() * 6) + 1);
     switch(roll){
         case 1:
-            events.innerHTML += "<b>High-Class Visitor</b> A wealthy aristocrat is passing through and throwing their money around. It seems like anything can be bought, and no price is too high." 
+            events.innerHTML += "<b>High-Class Visitor</b> A wealthy aristocrat is passing through and throwing their money around. It seems like anything can be bought, and no price is too high.";
             break;
         case 2:
-            events.innerHTML += "<b>Troublemakers</b> A pack of ruffians is making themselves a nuisance to the locals. Hostile encounters are escalating and might become violent."
+            events.innerHTML += "<b>Troublemakers</b> A pack of ruffians is making themselves a nuisance to the locals. Hostile encounters are escalating and might become violent.";
             break;
         case 3:
-            events.innerHTML += "<b>Fool's Festival</b> It's the day of the fool. Many folk are dressed as jesters and tumblers. The drink is flowing and the mood is merry."
+            events.innerHTML += "<b>Fool's Festival</b> It's the day of the fool. Many folk are dressed as jesters and tumblers. The drink is flowing and the mood is merry.";
             break;
         case 4:
-            events.innerHTML += "<b>Caught Red-Handed</b> A shop owner has caught a thief, and is threatening them with a weapon in the street as they beg for mercy."
+            events.innerHTML += "<b>Caught Red-Handed</b> A shop owner has caught a thief, and is threatening them with a weapon in the street as they beg for mercy.";
             break;
         case 5:
-            events.innerHTML += "<b>Strangers</b> A large trade caravan just arrived, full of people locals have never seen, and some don't know what to make of them."
+            events.innerHTML += "<b>Strangers</b> A large trade caravan just arrived, full of people locals have never seen, and some don't know what to make of them.";
             break;
         case 6:
-            events.innerHTML += "<b>Public Emergency</b> There is an emergency situation in town, such as a fire. There is lots of commotion as people rush to help, or get a look at what's going on."
+            events.innerHTML += "<b>Public Emergency</b> There is an emergency situation in town, such as a fire. There is lots of commotion as people rush to help, or get a look at what's going on.";
             break;
     }
 }
+
 function opportunitiesValue(){
     let opportunities = document.getElementById("opportunities");
     let roll = (Math.floor(Math.random() * 6) + 1);
@@ -423,7 +467,6 @@ function opportunitiesValue(){
     }
 }
 
-
 function weatherValue(){
     let weater = document.getElementById("weather");
     let roll = (Math.floor(Math.random() * 20) + 1);
@@ -445,6 +488,7 @@ function weatherValue(){
             break
     }
 }
+
 function dangerLevelValue(){
     let dangerLevel = document.getElementById("dangerLevel")
     let roll = (Math.floor(Math.random() * 20) + 1);
@@ -466,6 +510,7 @@ function dangerLevelValue(){
 
     }
 }
+
 function dangerTypeValue(){
     let dangerType = document.getElementById("dangerType");
     let roll = (Math.floor(Math.random() * 20) + 1);
