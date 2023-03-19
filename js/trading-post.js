@@ -4,10 +4,11 @@ var sizeMod = 0;
 var crimeMod = 0;
 var size = 0;
 
+
 //Basic Information
 originValue();
 specialityValue();
-ageValue();/*
+ageValue();
 conditionValue();
 visitorTrafficValue();
 sizeValue();
@@ -16,7 +17,7 @@ environmentValue();
 //Community
 residentPopulationValue();
 demographicsValue();
-disposition();
+dispositionValue();/*
 lawEnforcement();
 leadership();
 populationWealth();
@@ -466,7 +467,7 @@ function dangerLevelValue(){
     }
 }
 function dangerTypeValue(){
-    let dangerType = document.getElementById("dangerType")
+    let dangerType = document.getElementById("dangerType");
     let roll = (Math.floor(Math.random() * 20) + 1);
     switch(true){
     case isInRange(roll, 1 ,2):
@@ -483,5 +484,27 @@ function dangerTypeValue(){
         break;
     case isInRange(roll, 19 ,20):
         dangerType.innerHTML += "<b>Cult/b> There is a cult within the trading post. The cult may be known, and present a direct form of threat, or they may be unknown, and the dangers they present may seem to stem from another source, or be unrelated."
+    }
+}
+function dispositionValue(){
+    let disposition = document.getElementById("disposition");
+    let roll = (Math.floor(Math.random() * 20) + 1);
+    switch(true){
+    case isInRange(roll, 1, 2):
+        disposition.innerHTML += "<b>Hostile</b> Locals seem very unfriendly toward visitors, and would likely make out-of-towners feel unwelcome. This could manifest as coldness, passive-aggressiveness, or even violence."
+        break;
+    case isInRange(roll, 3, 6):
+        disposition.innerHTML += "<b>Unfriendly</b> Locals don't care much for visitors, looking upon them with contempt, fear, or suspicion"
+        break;
+    case isInRange(roll, 7, 14):
+        disposition.innerHTML += "<b>Neutral</b> Locals are standoffish, or perhaps hard on the outside, but can be friendly, if you get to know them."
+        break;
+    case isInRange(roll, 15, 18):
+        disposition.innerHTML += "<b>Friendly</b> Locals are generally friendly, welcoming, and slow to take offense."
+        break;
+    case isInRange(roll, 19, 20):
+        disposition.innerHTML += "<b>Open</b> The locals actively enjoy visitors, and their culture incorporates this. Just about anyone is welcome."
+        break;
+
     }
 }
