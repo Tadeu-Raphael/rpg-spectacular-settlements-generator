@@ -1,3 +1,8 @@
+var visitorTrafficMod = 0;
+var populationWealthMod = 0;
+var sizeMod = 0;
+var crimeMod = 0;
+var size = 0;
 
 //Basic Information
 originValue();
@@ -5,6 +10,7 @@ specialityValue();
 ageValue();/*
 conditionValue();
 visitorTrafficValue();
+sizeValue();
 environmentValue();
 
 //Community
@@ -133,14 +139,182 @@ function specialityValue(){
 }
 
 function ageValue(){
-        
+    let age = document.getElementById("age");
+    let roll = (Math.floor(Math.random() * 20) + 1);
+    switch(true){
+        case isInRange(roll, 1, 3):
+            age.innerHTML += "<b>Recent.</b> The trading post was established within the past year.";
+            visitorTrafficMod += (-1);
+            break;
+        case isInRange(roll, 4, 8):
+            age.innerHTML += "<b>Established.</b> The trading post has been around for at least a couple of years.";
+            break;
+        case isInRange(roll, 9, 13):
+            age.innerHTML += "<b>Mature.</b> The trading post was originally built decades ago.";
+            visitorTrafficMod += (1);
+            break;
+        case isInRange(roll, 14, 17):
+            age.innerHTML += "<b>Old.</b> The trading post was built around a hundred years ago.";
+            visitorTrafficMod += (2);
+            break;
+        case isInRange(roll, 18, 19):
+            age.innerHTML += "<b>Ancient.</b> The trading post was built hundreds of years ago.";
+            visitorTrafficMod += (3);
+            break;
+        case isInRange(roll, 20, 20):
+            age.innerHTML += "<b>Unknown.</b> No one really knows when the trading post was established.";
+            visitorTrafficMod += (4);
+            break;
+    }
 }
 
-/*conditionValue();
-visitorTrafficValue();
-environmentValue();
-residentPopulationValue();
-demographicsValue();
+function conditionValue(){
+    let condition = document.getElementById("condition");
+    let roll = (Math.floor(Math.random() * 20) + 1);
+    switch(true){
+        case isInRange(roll, 1, 2):
+            condition.innerHTML += "<b>Ramshackle.</b> A few of the buildings look to be falling down. There are no formal roads, only trodden paths.";
+            populationWealthMod += (-6);
+            break;
+        case isInRange(roll, 3, 6):
+            condition.innerHTML += "<b>Poor.</b> The buildings and surroundings are rough and dirty. Roads are uneven dirt and dust.";
+            populationWealthMod += (-3);
+            break;
+        case isInRange(roll, 7, 14):
+            condition.innerHTML += "<b>Fair.</b> The buildings are clean and sparsely decorated. Roads are flattened earth, possibly with gravel.";
+            break;
+        case isInRange(roll, 15, 18):
+            condition.innerHTML += "<b>Good.</b> Most of the structures are exceptionally well kept and moderately decorated. Roads are cobblestone or, perhaps, cheap brick.";
+            populationWealthMod += (3);
+            break;
+        case isInRange(roll, 19, 20):
+            condition.innerHTML += "<b>Immaculate.</b> The shops and houses are spotless, and well-adorned with tasteful decorations. Roads are made of fine, smooth, well-placed flagstones.";
+            populationWealthMod += (6);
+            break;
+    }
+
+}
+
+function visitorTrafficValue(){
+    let visitorTraffic = document.getElementById("visitorTraffic");
+    let roll = ((Math.floor(Math.random() * 20) + 1) + visitorTrafficMod);
+    switch(true){
+        case isInRange(roll, 0, 2):
+            visitorTraffic.innerHTML += "<b>Vacant.</b> No one seems to be visiting this place.";
+            crimeMod += 2;
+            break;
+        case isInRange(roll, 3, 6):
+            visitorTraffic.innerHTML += "<b>Groups.</b> Visitors are a rarity, though a few might be around.";
+            sizeMod += 1;
+            crimeMod += 1;
+            break;
+        case isInRange(roll, 7, 14):
+            visitorTraffic.innerHTML += "<b>Crowds.</b> It is typical to see some new visitors most days.";
+            sizeMod += 2;
+            break;
+        case isInRange(roll, 15, 18):
+            visitorTraffic.innerHTML += "<b>Droves.</b> There are lots of new faces on a regular basis.";
+            sizeMod += 3;
+            sizeMod += (-1);
+            break;
+        case isInRange(roll, 19, 24):
+            visitorTraffic.innerHTML += "<b>Masses.</b> New people are everywhere, coming and going at all times.";
+            sizeMod += 4;
+            sizeMod += (-2);
+            break;
+    }
+}
+
+function sizeValue(){
+    let size = document.getElementById("size");
+    let roll = ((Math.floor(Math.random() * 20) + 1) + sizeMod);
+    switch(true){
+        case isInRange(roll, 1, 2):
+            size.innerHTML += "<b>Very Small.</b> Up to 20 standing structures.";
+            break;
+        case isInRange(roll, 3, 6):
+            size.innerHTML += "<b>Small.</b> Up to 40 standing structures.";
+            break;  
+        case isInRange(roll, 7, 14):
+            size.innerHTML += "<b>Medium.</b> Up to 60 standing structures.";
+            break;
+        case isInRange(roll, 15, 18):
+            size.innerHTML += "<b>Large.</b> Up to 80 standing structures.";
+            break;
+        case isInRange(roll, 19, 24):
+            size.innerHTML += "<b>Very Large.</b> Up to 100 standing structures.";
+            break;
+    }
+}
+
+function environmentValue(){
+    let environment = document.getElementById("environment");
+    let roll = (Math.floor(Math.random() * 10) + 1);
+    switch(roll){
+        case 1:
+            environment.innerHTML += "<b>Coastal.</b> The trading post is near a large body of water, such as a lake or ocean.";
+            break;
+        case 2:
+            environment.innerHTML += "<b>Forest.</b> The trading post is nestled among the trees.";
+            break;
+        case 3:
+            environment.innerHTML += "<b>Mountains.</b> The trading post is found on stony passes or soaring peaks.";
+            break;
+        case 4:
+            environment.innerHTML += "<b>Plains.</b> The trading post is in the wide, open fields.";
+            break;
+        case 5:
+            environment.innerHTML += "<b>River.</b> The trading post is near a steadily flowing stream, or other watercourse.";
+            break;
+        case 6:
+            environment.innerHTML += "<b>Swamp.</b> The trading post is in, or near, a vast area of stagnant water.";
+            break;
+        case 7:
+            environment.innerHTML += "<b>Underground.</b> The trading post is within a large network of caves.";
+            break;
+        case 8:
+            environment.innerHTML += "<b>Valley.</b> The trading post is found within, or on the edge of, an area of recessed elevation in relation to the landscape around it.";
+            break;
+        case 9:
+            environment.innerHTML += "<b>Tundra.</b> The trading post is in a very cold environment.";
+            break;
+        case 10:
+            environment.innerHTML += "<b>Desert.</b> The trading post is in a dry and arid environment, likely covered with vast sand dunes.";
+            break;
+    }
+}
+
+function residentPopulationValue(){
+    let residentPopulation = document.getElementById("residentPopulation");
+    let roll = (Math.floor(Math.random() * 20) + 1);
+    switch(true){
+        case isInRange(roll, 1, 2):
+            residentPopulation.innerHTML += "<b>Nearly Deserted.</b> There are many empty houses and businesses.";
+            crimeMod += (2);
+            break;
+        case isInRange(roll, 3, 6):
+            residentPopulation.innerHTML += "<b>Sparse.</b> There are some empty houses and businesses.";
+            crimeMod += (1);
+            break;
+        case isInRange(roll, 7, 14):
+            residentPopulation.innerHTML += "<b>Appropriate.</b> Homes and businesses are comfortably populated.";
+            break;
+        case isInRange(roll, 15, 18):
+            residentPopulation.innerHTML += "<b>Congested.</b> Movement is difficult. Homes and common buildings are often at capacity.";
+            crimeMod += (-1);
+            break;
+        case isInRange(roll, 19, 20):
+            residentPopulation.innerHTML += "<b>Overwhelmed.</b> The trading post cannot support this many people. Movement is extremely difficult. Tent and shanty towns have cropped up along the outskirts of the settlement.";
+            crimeMod += (-2);
+            break;
+    }
+}
+
+function demographicsValue(){
+
+
+}
+
 disposition();
 lawEnforcement();
 leadership();
@@ -148,7 +322,7 @@ populationWealth();
 crimeValue();
 shopsValue();
 servicesValue();
-placesWorshipValue();*/
+placesWorshipValue();
 
 function recentHistoryValue(){
     let recentHistory = document.getElementById("recentHistory");
