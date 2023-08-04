@@ -3,7 +3,8 @@ var populationWealthMod = 0;
 var sizeMod = 0;
 var crimeMod = 0;
 var qualityMod = 0;
-var size = 0;
+var tradingPostSize = 0;
+var urbanEncounterMod = 0;
 
 
 //Basic Information
@@ -40,6 +41,24 @@ dangerTypeValue();
 
 function isInRange(x, min, max) {
     return min <= x && x <= max;
+}
+
+function rollDice(diceSize){
+    return (Math.floor(Math.random() * diceSize) + 1);
+}
+
+function displayMessage(element, message) {
+    // Criar um elemento <div> para a mensagem
+    const messageDiv = document.createElement("div");
+    messageDiv.innerHTML = message;
+
+    // Limpar o conteúdo atual do elemento "demographics"
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+
+    // Adicionar a mensagem ao elemento "demographics"
+    element.appendChild(messageDiv);
 }
 
 function originValue(){
@@ -233,18 +252,23 @@ function sizeValue(){
     switch(true){
         case isInRange(roll, 1, 2):
             size.innerHTML += "<b>Very Small.</b> Up to 20 standing structures.";
+            tradingPostSize = 1;
             break;
         case isInRange(roll, 3, 6):
             size.innerHTML += "<b>Small.</b> Up to 40 standing structures.";
+            tradingPostSize = 2;
             break;  
         case isInRange(roll, 7, 14):
             size.innerHTML += "<b>Medium.</b> Up to 60 standing structures.";
+            tradingPostSize = 3;
             break;
         case isInRange(roll, 15, 18):
             size.innerHTML += "<b>Large.</b> Up to 80 standing structures.";
+            tradingPostSize = 4;
             break;
         case isInRange(roll, 19, 24):
             size.innerHTML += "<b>Very Large.</b> Up to 100 standing structures.";
+            tradingPostSize = 5;
             break;
     }
 }
@@ -313,20 +337,200 @@ function residentPopulationValue(){
 }
 
 function demographicsValue(){
-
-
+    let demographics = document.getElementById("demographics");
+    let roll = rollDice(20);
+    switch (true) {
+        case isInRange(roll, 1, 5):
+            demographics.innerHTML += "<b>Only One.</b> 100% primary race.";
+            break;
+        case isInRange(roll, 6, 10):
+            demographics.innerHTML += "<b>Only Two.</b> 60% primary race, 40% secondary race.";
+            break;
+        case isInRange(roll, 11, 14):
+            demographics.innerHTML += "<b>Normal Distribution.</b> 50% primary race, 25% secondary race, 15% tertiary race, 10% other.";
+            break;
+        case isInRange(roll, 15, 17):
+            demographics.innerHTML += "<b>Wide Distribution.</b> 20% primary race. All others reasonably well represented.";
+            break;
+        case isInRange(roll, 18, 19):
+            demographics.innerHTML += "<b>High and Low.</b> 80% primary race, 20% secondary race.";
+            break;
+        case isInRange(roll, 20, 20):
+            demographics.innerHTML += "<b>Ever-Changing.</b> No discernible distribution. Racial representation lacks any sense of numerical dominance.";
+            break;
+    }
 }
 
 function dispositionValue(){
+    let disposition = document.getElementById("disposition");
+    let roll = rollDice(20);
+
+    const messages = [
+        {
+            range: [1, 2],
+            message: "<b>Hostile.</b> Locals seem very unfriendly toward visitors, and would likely make out-of-towners feel unwelcome. This could manifest as coldness, passive-aggressiveness, or even violence."
+        },
+        {
+            range: [3, 6],
+            message: "<b>Unfriendly.</b> Locals don’t care much for visitors, looking upon them with contempt, fear, or suspicion."
+        },
+        {
+            range: [7, 14],
+            message: "<b>Neutral.</b> Locals are standoffish, or perhaps hard on the outside, but can be friendly, if you get to know them."
+        },
+        {
+            range: [15, 18],
+            message: "<b>Friendly.</b> Locals are generally friendly, welcoming, and slow to take offense."
+        },
+        {
+            range: [19, 20],
+            message: "<b>Open.</b> The locals actively enjoy visitors, and their culture incorporates this. Just about anyone is welcome."
+        }
+    ];
+
+    let foundMessage;
+    for (const item of messages) {
+        if (isInRange(roll, item.range[0], item.range[1])) {
+            foundMessage = item.message;
+            break;
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(disposition, foundMessage);
+    } else {
+        displayMessage(disposition, "Invalid roll value.");
+    }
 
 }
 
 function lawEnforcementValue(){
+    let lawEnforcement = document.getElementById("lawEnforcement");
+    let roll = rollDice(20);
 
+    const messages = [
+        {
+            range: [1, 2],
+            crimeMod: (-8),
+            message: "<b>None.</b> This could be good or bad, depending on one’s point of view. Good, if the folk here are just that. Bad when mob justice is carried out on a petty thief."
+        },
+        {
+            range: [3, 6],
+            crimeMod: (-4),
+            message: "<b>Sheriff.</b> A single sheriff and a deputy keep things civil."
+        },
+        {
+            range: [7, 14],
+            crimeMod: (0),
+            message: "<b>Small Local Watch.</b> A sheriff, a deputy, and a handful of volunteer residents make up a token watch presence."
+        },
+        {
+            range: [15, 18],
+            crimeMod: (4),
+            message: "<b>Well-Equipped.</b> Law enforcement is very common."
+        },
+        {
+            range: [19, 20],
+            crimeMod: (8),
+            message: "<b>Overwhelming Presence.</b> Law enforcement is always around in public, no matter what."
+        }
+    ];
+
+    let foundMessage;
+    for (const item of messages) {
+        if (isInRange(roll, item.range[0], item.range[1])) {
+            foundMessage = item.message;
+            crimeMod += item.crimeMod;
+            break;
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(lawEnforcement, foundMessage);
+    } else {
+        displayMessage(lawEnforcement, "Invalid roll value.");
+    }
 }
 
 function leadershipValue(){
+    let leadership = document.getElementById("leadership");
+    let roll = rollDice(20);
 
+    const messages = [
+        {
+            range: [1, 1],
+            message: "<b>No Leader.</b> The trading post operates with no leadership, which could lead to unresolved disputes."
+        },
+        {
+            range: [2, 4],
+            message: "<b>Hereditary.</b> A non-elected leader is in power, by virtue of their bloodline."
+        },
+        {
+            range: [5, 7],
+            message: "<b>Merchant Monarch.</b> The wealthiest shop owner in the trading post leads by default."
+        },
+        {
+            range: [8, 10],
+            message: "<b>Underworld or Criminal Enterprise.</b> A criminal, or group of criminals, either publicly, or privately, controls the trading post."
+        },
+        {
+            range: [11, 13],
+            message: "<b>Oligarchy.</b> A few individuals hold sway, collectively, over the trading post."
+        },
+        {
+            range: [14, 16],
+            message: "<b>Local Council.</b> Prominent members of the community were chosen to lead the trading post collectively."
+        },
+        {
+            range: [17, 19],
+            message: "<b>Single, elected leader.</b> The locals democratically voted for their current leader."
+        },
+        {
+            range: [20, 20],
+            message: "<b>Anarcho-Syndicalist Commune.</b> The members of the trading post take turns as a sort of executive officer for the week."
+        }
+    ];
+
+    let foundMessage;
+    for (const item of messages) {
+        if (isInRange(roll, item.range[0], item.range[1])) {
+            foundMessage = item.message;
+            if(isInRange(roll, 11, 13)){
+                let innerRoll = rollDice(4);
+                const innerMessage = [
+                    {
+                        range: [1, 1],
+                        message: "<b>merchants (plutocracy).</b>"
+                    },
+                    {
+                        range: [2, 2],
+                        message: "<b>mages (magocracy).</b>"
+                    },
+                    {
+                        range: [3, 3],
+                        message: "<b>priests (theocracy).</b>"
+                    },
+                    {
+                        range: [4, 4],
+                        message: "<b>other small group.</b>"
+                    }
+                ]
+                for(const innerItem of innerMessage){
+                    if(isInRange(innerRoll, innerItem.range[0], innerItem.range[1])){
+                        foundMessage += ' (' + innerItem.message + ')';
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(leadership, foundMessage);
+    } else {
+        displayMessage(leadership, "Invalid roll value.");
+    }
 }
 
 function populationWealthValue(){
@@ -363,10 +567,501 @@ function populationWealthValue(){
     }
 }
 
-crimeValue();
-shopsValue();
-servicesValue();
-placesWorshipValue();
+function crimeValue(){
+    let crime = document.getElementById("crime");
+    let roll = rollDice(20) + crimeMod;
+
+    const messages = [
+        {
+            range: [-15, 2],
+            urbanEncounterMod: (4),
+            message: "<b>Regular.</b> The streets are crawling with criminals, and a purse unstowed is almost sure to be snatched."
+          },
+          {
+            range: [3, 6],
+            urbanEncounterMod: (3),
+            message: "<b>Common.</b> Most are used to hearing about trouble every day or two. Everyone knows someone who's been a victim of crime."
+          },
+          {
+            range: [7, 14],
+            urbanEncounterMod: (2),
+            message: "<b>Average.</b> Theft or mild violence can happen from time to time. Best to keep an eye out."
+          },
+          {
+            range: [15, 18],
+            urbanEncounterMod: (1),
+            message: "<b>Uncommon.</b> Some in the trading post have run into a pickpocket or heard about a robbery but, when they do, it's a noteworthy occurrence."
+          },
+          {
+            range: [19, 32],
+            urbanEncounterMod: (0),
+            message: "<b>Rare.</b> Most in the trading post have had no personal experience of crime, and know few people that have."
+          }
+    ];
+
+    let foundMessage;
+    for (const item of messages) {
+        if (isInRange(roll, item.range[0], item.range[1])) {
+            foundMessage = item.message;
+            urbanEncounterMod += item.urbanEncounterMod;
+            break;
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(crime, foundMessage);
+    } else {
+        displayMessage(crime, "Invalid roll value.");
+    }
+}
+
+function shopsValue(){
+    let shops = document.getElementById("shops");
+    let sizeRoll = rollDice(8);
+    let totalNumberShops;
+
+    switch(tradingPostSize){
+        case 1:
+            totalNumberShops = sizeRoll + 2;
+            break;
+        case 2:
+            totalNumberShops = sizeRoll + 4;
+            break;
+        case 3:
+            totalNumberShops = sizeRoll + 6;
+            break;
+        case 4:
+            totalNumberShops = sizeRoll + 8;
+            break;
+        case 5:
+            totalNumberShops = sizeRoll + 10;
+            break;
+    }
+
+    const messages = [
+        {
+            range: [1, 4],
+            message: "<b>Baker (B).</b> Bakes and sells fresh bread and, possibly, pastries."
+          },
+          {
+            range: [5, 8],
+            message: "<b>Butcher (B).</b> Processes and sells fresh and/or dried meat."
+          },
+          {
+            range: [9, 12],
+            message: "<b>Cooper (B).</b> Crafts wooden vessels held together with metal hoops, including barrels, buckets, etc."
+          },
+          {
+            range: [13, 16],
+            message: "<b>Carpenter (B).</b> Builds with or carves wood, as well as carrying out repairs."
+          },
+          {
+            range: [17, 24],
+            message: "<b>General Store (B).</b> Sells basic supplies, groceries, and various odds and ends."
+          },
+          {
+            range: [25, 28],
+            message: "<b>Herbalist (B).</b> Sells common herbs and natural, non-magical remedies."
+          },
+          {
+            range: [29, 36],
+            message: "<b>Smithy (B).</b> Sells and crafts metal tools and equipment, including very basic weapons and armor."
+          },
+          {
+            range: [37, 40],
+            message: "<b>Tailor (B).</b> Makes and sells clothing, including hats and cloaks. Also sells general items made from cloth, such as blankets, and carries out repairs and alterations of cloth goods."
+          },
+          {
+            range: [41, 44],
+            message: "<b>Tanner/Taxidermist (B).</b> Processes animal hides for practical or ornamental purposes."
+          },
+          {
+            range: [45, 48],
+            message: "<b>Thatcher (B).</b> Builds roofs using layers of dried straw, reeds, rushes, etc."
+          },
+          {
+            range: [49, 52],
+            message: "<b>Wainwright (B).</b> Builds carts and wagons."
+          },
+          {
+            range: [53, 56],
+            message: "<b>Weaver (B).</b> Weaves raw fabric and baskets."
+          },
+          {
+            range: [57, 59],
+            message: "<b>Alchemist (S).</b> Brews and sells potions, as well as mundane herbs and alchemical ingredients."
+          },
+          {
+            range: [60, 62],
+            message: "<b>Artist (S).</b> Encompasses painter, sculptor, or other visual art as appropriate."
+          },
+          {
+            range: [63, 65],
+            message: "<b>Bank & Exchange (S).</b> Encompasses auctions, banking, and the specific selling of gems or exchange of currency."
+          },
+          {
+            range: [66, 68],
+            message: "<b>Cobbler (S).</b> Makes and mends boots and shoes."
+          },
+          {
+            range: [69, 71],
+            message: "<b>Foundry/Smelting (S).</b> Ore processing and metal fabrication."
+          },
+          {
+            range: [72, 74],
+            message: "<b>Mill (S).</b> Facilities for milling grain."
+          },
+          {
+            range: [75, 77],
+            message: "<b>Textile Production (S).</b> Larger scale than a single weaver, offering a wider array of materials in larger quantities."
+          },
+          {
+            range: [78, 80],
+            message: "<b>Shipwright (S).</b> Builds and launches boats and/or ships. [Reroll if settlement is not bordering a significant source of water]"
+          },
+          {
+            range: [81, 82],
+            message: "<b>Rare Botanicals (E).</b> Cultivates and sells herbs rare to the region."
+          },
+          {
+            range: [83, 84],
+            message: "<b>Luxury Furnishings (E).</b> Procures and sells all manner of home items for fine living, including furniture, art, and other high-quality goods."
+          },
+          {
+            range: [85, 86],
+            message: "<b>Rare Libations & Fare (E).</b> Sells (and, perhaps, makes or brews) drinks and/or food of surpassing quality or rarity to the region."
+          },
+          {
+            range: [87, 88],
+            message: "<b>Rare Trade Goods (E).</b> Procures and sells items and materials, such as ores or textiles, that are rare to the region."
+          },
+          {
+            range: [89, 90],
+            message: "<b>Magic Shop - Armor (E).</b> Sells magical items with a focus on armor and protective equipment."
+          },
+          {
+            range: [91, 92],
+            message: "<b>Magic Shop - Books (E).</b> Sells magical items with a focus on literature, arcane tomes and lore. They may also carry books and documents (such as maps and records) of a rare and significant nature, though non-magical."
+          },
+          {
+            range: [93, 94],
+            message: "<b>Magic Shop - Clothing (E).</b> Sells magical items with a focus on clothing of all types which bear magical properties."
+          },
+          {
+            range: [95, 96],
+            message: "<b>Magic Shop - Jewelry (E).</b> Sells magical items with a focus on enchanted, or otherwise magically imbued, jewelry."
+          },
+          {
+            range: [97, 98],
+            message: "<b>Magic Shop - Weapons (E).</b> Sells magical items with a focus on weapons with mystic properties and, perhaps, shields."
+          },
+          {
+            range: [99, 100],
+            message: "<b>Magic Shop - Miscellaneous & Curiosities (E).</b> Procures and sells magical items with a focus on strange and rare artifacts of a wondrous or intriguing nature."
+          }
+    ];
+
+    let foundMessage = '';
+    for(let i = 1; i <= totalNumberShops; i++){
+        let roll = rollDice(100);
+        for (const item of messages) {
+            if (isInRange(roll, item.range[0], item.range[1])) {
+                if(i == totalNumberShops){
+                    foundMessage += i + '. ' + item.message;
+                } else {
+                    foundMessage += i + '. ' + item.message + '<br>';
+                }
+                break;
+            }
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(shops, foundMessage);
+    } else {
+        displayMessage(shops, "Invalid roll value.");
+    }
+}
+
+function hiredHelpValue(){
+    let roll = rollDice(12);
+
+    const messages = [
+        {
+            range: [1, 6],
+            message: "<b>Individual Person.</b> The hired help is a single person hiring out their services."
+        },
+        {
+            range: [7, 10],
+            message: "<b>Team.</b> The hired help is a team of individuals who work together."
+        },
+        {
+            range: [11, 12],
+            message: "<b>Guild.</b> An organized guild is hiring out their services. When hired, a portion of the guild's members handle the job, not the entire guild (unless the job is very large)."
+        }
+    ];
+
+    let foundMessage;
+    for (const item of messages) {
+        if (isInRange(roll, item.range[0], item.range[1])) {
+            foundMessage = item.message;
+            break;
+        }
+    }
+
+    return " | <b>Hired Help Size:</b> " + foundMessage;
+}
+
+function servicesValue(){
+    let services = document.getElementById("services");
+    let sizeRoll = rollDice(6);
+    let totalNumberShops;
+
+    switch(tradingPostSize){
+        case 1:
+            totalNumberShops = sizeRoll;
+            break;
+        case 2:
+            totalNumberShops = sizeRoll + 1;
+            break;
+        case 3:
+            totalNumberShops = sizeRoll + 3;
+            break;
+        case 4:
+            totalNumberShops = sizeRoll + 5;
+            break;
+        case 5:
+            totalNumberShops = sizeRoll + 7;
+            break;
+    }
+
+    const messages = [
+        {
+            range: [1, 8],
+            message: "<b>Barber.</b> Provides grooming services, such as haircuts or shaves."
+        },
+        {
+            range: [9, 16],
+            message: "<b>Bathhouse.</b> Provides spaces for bathing."
+        },
+        {
+            range: [17, 24],
+            message: "<b>Doctor/Apothecary.</b> Provides medical care."
+        },
+        {
+            range: [25, 32],
+            message: "<b>House of Leisure.</b> Provides entertainment and/or relaxation (GM may decide what kind)."
+        },
+        {
+            range: [33, 44],
+            message: "<b>Inn.</b> Provides accommodation, as well as a place to have a bath and a decent meal."
+        },
+        {
+            range: [45, 52],
+            message: "<b>Club.</b> Provides entertainment via comedic, dramatic or musical performance."
+        },
+        {
+            range: [53, 60],
+            message: "<b>Soothsayer.</b> Provides magical prediction and prophecy - sayers of sooth!"
+        },
+        {
+            range: [61, 68],
+            message: "<b>Stable.</b> Provides boarding accommodation for mounts, as well as selling carts, animals, and their tack."
+        },
+        {
+            range: [69, 80],
+            message: "<b>Tavern.</b> Provides food and drink."
+        },
+        {
+            range: [81, 82],
+            message: "<b>Hired Help - Brutes and Brawlers.</b> Thugs, ruffians, and muscle."
+        },
+        {
+            range: [83, 84],
+            message: "<b>Hired Help - Cloak and Dagger.</b> Assassins, thieves, and spies."
+        },
+        {
+            range: [85, 86],
+            message: "<b>Hired Help - Bows and Slings.</b> Archers and ranged attack specialists."
+        },
+        {
+            range: [87, 88],
+            message: "<b>Hired Help - Scribes and Clerks.</b> Masters of history, literature, mathematics, and/or business."
+        },
+        {
+            range: [89, 90],
+            message: "<b>Hired Help - Guides and Trackers.</b> Scouts, rangers, and wilderness experts."
+        },
+        {
+            range: [91, 92],
+            message: "<b>Hired Help - Caravan and Mount.</b> Specialists in transportation and journeys to various locations, as well as expedition organization and management."
+        },
+        {
+            range: [93, 94],
+            message: "<b>Hired Help - Arcane Academics.</b> Experts in matters of magic and lore (may also be natural magic or something else; it need not be exclusively arcane)."
+        },
+        {
+            range: [95, 96],
+            message: "<b>Hired Help - Magic Mercenaries.</b> Specialists trained in the use of arcane or non-divine magic in combat and practical mission scenarios."
+        },
+        {
+            range: [97, 98],
+            message: "<b>Hired Help - Priestly Guidance.</b> Sages offering counsel in all matters of religion and the divine."
+        },
+        {
+            range: [99, 100],
+            message: "<b>Hired Help - Hands of the Divine.</b> Specialists trained in the use of divine magic in combat and practical mission scenarios."
+        }
+    ];
+
+    let foundMessage = '';
+    for(let i = 1; i <= totalNumberShops; i++){
+        let roll = rollDice(100);
+        for (const item of messages) {
+            if (isInRange(roll, item.range[0], item.range[1])) {
+                if(i == totalNumberShops){
+                    if(isInRange(roll, 81, 100)){
+                        foundMessage += i + '. ' + item.message + hiredHelpValue();
+                    } else {
+                        foundMessage += i + '. ' + item.message;
+                    }
+                } else {
+                    if(isInRange(roll, 81, 100)){
+                        foundMessage += i + '. ' + item.message + hiredHelpValue() + '<br>';
+                    } else {
+                        foundMessage += i + '. ' + item.message + '<br>';
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    if (foundMessage) {
+        displayMessage(services, foundMessage);
+    } else {
+        displayMessage(services, "Invalid roll value.");
+    }
+}
+
+function placesWorshipValue(){
+    let placesWorship = document.getElementById("placesWorship");
+    let roll = rollDice(6);
+    if(isInRange(roll, 4, 6)){
+
+        let rollSize = rollDice(20);
+
+        const messages = [
+            {
+                range: [1, 1],
+                message: "<b>Secret.</b> The place of worship’s size is unclear, as the location is not publicly known."
+            },
+            {
+                range: [2, 8],
+                message: "<b>Altar.</b> A small shrine or, perhaps, a tiny shack, usually evincing some various items or images relating to that which the faith venerates."
+            },
+            {
+                range: [9, 14],
+                message: "<b>Oratory.</b> A modest building with seating for attendees, appointed with various items or images relating to that which the faith venerates."
+            },
+            {
+                range: [15, 17],
+                message: "<b>Sanctuary.</b> A large, well-appointed structure, able to comfortably accommodate up to a few hundred people."
+            },
+            {
+                range: [18, 19],
+                message: "<b>Temple.</b> A grand building, replete with elements like high ceilings, plush furnishings, and other impressive ornamental and/or architectural features. It can hold nearly a thousand attendees."
+            },
+            {
+                range: [20, 20],
+                message: "<b>Great Temple.</b> An awe-inspiring structure, devoted to that which it venerates. No expense was spared in its construction. It might display such elements as stunning frescos, elaborate stained-glass scenes, and towering, gilded statues. Walking into a great temple is a rare and striking experience for those who do not live near one."
+            }
+        ];
+    
+        let foundMessage = "";
+        for (const item of messages) {
+            if (isInRange(rollSize, item.range[0], item.range[1])) {
+                foundMessage += '<b><i>Size:</i></b> ' + item.message + ' | ';
+                break;
+            }
+        }
+
+        let rollFervency = rollDice(20);
+
+        const messagesFervency = [
+            {
+                range: [1, 3],
+                message: "<b>Unseen.</b> To those outside the following, it is not clear that the group exists."
+            },
+            {
+                range: [4, 7],
+                message: "<b>Quiet.</b> Adherents to the faith are inconspicuous unless one knows what to look for (perhaps particular gestures, items of clothing, or phrases)."
+            },
+            {
+                range: [8, 12],
+                message: "<b>Subtle.</b> Followers of the faith may be identifiable but remain very reserved."
+            },
+            {
+                range: [13, 16],
+                message: "<b>Moderate.</b> The pious are confident and unafraid to display their faith openly, but do not encroach upon the wider populace uncalled for."
+            },
+            {
+                range: [17, 19],
+                message: "<b>Fervent.</b> Followers are outspoken, with little or no fear of reproach. They may sing or speak to the masses."
+            },
+            {
+                range: [20, 20],
+                message: "<b>Zealous.</b> Adherents are utterly and unthinkingly devout, forcing their doctrine upon their surroundings and peers, or taking actions that further their cause regardless of personal cost. Though typically seen as negative, this could also be a positive, such as a church of light rising up in an evil kingdom, helping those in need, even if it puts themselves in peril."
+            }
+        ];
+        
+        for (const item of messagesFervency) {
+            if (isInRange(rollFervency, item.range[0], item.range[1])) {
+                foundMessage += '<b><i>Fervency:</i></b> ' + item.message + ' | ';
+                break;
+            }
+        }
+
+        let rollAlignment = rollDice(10);
+
+        const messagesAlignment = [
+            {
+                range: [1, 1],
+                message: "Evil"
+            },
+            {
+                range: [2, 5],
+                message: "Neutral"
+            },
+            {
+                range: [6, 10],
+                message: "Good"
+            }
+        ];
+
+        for (const item of messagesAlignment) {
+            if (isInRange(rollAlignment, item.range[0], item.range[1])) {
+                foundMessage += '<b><i>Alignment:</i></b> ' + item.message;
+                break;
+            }
+        }
+
+        if (foundMessage) {
+            displayMessage(placesWorship, foundMessage);
+        } else {
+            displayMessage(placesWorship, "Invalid roll value.");
+        } 
+    } else {
+        let foundMessage = "No places of worship.";
+
+        if (foundMessage) {
+            displayMessage(placesWorship, foundMessage);
+        } else {
+            displayMessage(placesWorship, "Invalid roll value.");
+        } 
+    }
+
+}
 
 function recentHistoryValue(){
     let recentHistory = document.getElementById("recentHistory");
@@ -468,7 +1163,7 @@ function opportunitiesValue(){
 }
 
 function weatherValue(){
-    let weater = document.getElementById("weather");
+    let weather = document.getElementById("weather");
     let roll = (Math.floor(Math.random() * 20) + 1);
     switch(true){
         case isInRange(roll, 1, 2):
@@ -531,6 +1226,7 @@ function dangerTypeValue(){
         dangerType.innerHTML += "<b>Cult/b> There is a cult within the trading post. The cult may be known, and present a direct form of threat, or they may be unknown, and the dangers they present may seem to stem from another source, or be unrelated."
     }
 }
+
 function dispositionValue(){
     let disposition = document.getElementById("disposition");
     let roll = (Math.floor(Math.random() * 20) + 1);
